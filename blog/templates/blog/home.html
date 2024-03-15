@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h2>Welcome to the Blog</h2>
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}!</p>
+        <a href="{% url 'logout' %}">Logout</a>
+        <hr>
+        <h3>Create a new post</h3>
+        <a href="{% url 'create_post' %}">Create Post</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+    <hr>
+    <h3>Latest Posts</h3>
+    {% for post in posts %}
+        <h4>{{ post.title }}</h4>
+        <p>{{ post.content }}</p>
+        <p>Author: {{ post.author.username }}</p>
+        <p>Published on: {{ post.created_at }}</p>
+        <hr>
+    {% empty %}
+        <p>No posts yet.</p>
+    {% endfor %}
+</body>
+</html>
